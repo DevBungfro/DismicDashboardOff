@@ -168,6 +168,11 @@ module.exports = async (client) => {
   app.get("/", (req, res) => {
     renderTemplate(res, req, "index.ejs");
   });
+  
+  app.get("/support", (req, res) => {
+    res.redirect("https://discord.gg/invite/95QvjUn9pd")
+  });
+
 
   // Dashboard endpoint.
   app.get("/dashboard", checkAuth, (req, res) => {
