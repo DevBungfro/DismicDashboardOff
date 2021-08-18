@@ -5,7 +5,6 @@ const express = require("express");
 const passport = require("passport");
 const session = require("express-session");
 const Strategy = require("passport-discord").Strategy;
-const config = require("../config");
 const ejs = require("ejs");
 const bodyParser = require("body-parser");
 const Discord = require("discord.js");
@@ -33,7 +32,7 @@ module.exports = async (client) => {
   var domain;
   
   try {
-    const domainUrl = new URL(config.domain);
+    const domainUrl = new URL(process.env.domain);
     domain = {
       host: domainUrl.hostname,
       protocol: domainUrl.protocol
@@ -43,10 +42,10 @@ module.exports = async (client) => {
     throw new TypeError("Invalid domain specific in the config file.");
   }
   
-  if (config.usingCustomDomain) {
+  if (process.env.usingCustomDomain) {
     callbackUrl =  `${domain.protocol}//${domain.host}/callback`
   } else {
-    callbackUrl = `${domain.protocol}//${domain.host}${config.port == 80 ? "" : `:${config.port}`}/callback`;
+    callbackUrl = `${domain.protocol}//${domain.host}${process.env.port == 80 ? "" : `:${process.env.port}`}/callback`;
   }
   
   // This line is to inform users where the system will begin redirecting the users.
@@ -61,8 +60,8 @@ module.exports = async (client) => {
    *  - Guilds: A list of partial guilds.
   */
   passport.use(new Strategy({
-    clientID: config.id,
-    clientSecret: config.clientSecret,
+    clientID: process.env.id,
+    clientSecret: process.env.clientSecret,
     callbackURL: callbackUrl,
     scope: ["identify", "guilds"]
   },
@@ -84,7 +83,7 @@ module.exports = async (client) => {
   app.use(passport.session());
 
   // We bind the domain.
-  app.locals.domain = config.domain.split("//")[1];
+  app.locals.domain = process.env.domain.split("//")[1];
 
   // We set out templating engine.
   app.engine("html", ejs.renderFile);
@@ -230,5 +229,5 @@ module.exports = async (client) => {
         renderTemplate(res, req, "settings.ejs", { guild, settings: storedSettings, alert: "Your settings have been saved." });
     });
 
-  app.listen(config.port, null, null, () => console.log(`Dashboard is up and running on port ${config.port}.`));
+  app.listen(process.env.port, null, null, () => console.log(`Dashboard is up and running on port ${process.env.port}.`));
 };

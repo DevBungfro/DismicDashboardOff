@@ -5,7 +5,6 @@
 require("dotenv").config()
 const Discord = require("discord.js");
 const mongoose = require("mongoose");
-const config = require("./config");
 const GuildSettings = require("./models/settings");
 const Dashboard = require("./dashboard/dashboard");
 
@@ -20,11 +19,10 @@ const client = new Discord.Client({
   }
 });
 
-mongoose.connect(config.mongodbUrl, {
+mongoose.connect(process.env.mongodbUrl, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 });
-client.config = config;
 
 // We listen for client's ready event.
 client.on("ready", async () => {
@@ -44,7 +42,6 @@ client.on("ready", async () => {
 // We listen for message events.
 client.on("message", async (message) => {
   // Declaring a reply function for easier replies - we grab all arguments provided into the function and we pass them to message.channel.send function.
-  const reply = (...arguments) => message.channel.send(...arguments);
 
   // Doing some basic command logic.
   if (message.author.bot) return;
@@ -70,7 +67,7 @@ client.on("message", async (message) => {
 
   // If command is ping we send a sample and then edit it with the latency.
   if (command === "ping") {
-    const roundtripMessage = await reply("Pong!");
+    const roundtripMessage = await message.reply("Pong!");
     return roundtripMessage.edit(`*${roundtripMessage.createdTimestamp - message.createdTimestamp}ms*`);
   }
 });
@@ -80,4 +77,4 @@ client.on("error", console.error);
 client.on("warn", console.warn);
 
 // We login into the bot.
-client.login(config.token);
+client.login(process.env.token);
