@@ -1,11 +1,11 @@
-body-card {
+body {
   overflow-x: hidden;
-  background-color: var(--background-primary);
+  background-color: rgb(6, 33, 83);
   color: var(--font);
 }
 
 h1, h2, h3, h4, h5 {
-  color: var(--heading);
+  color: black
 }
 
 code.hljs {
