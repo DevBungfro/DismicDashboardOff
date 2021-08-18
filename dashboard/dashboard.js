@@ -103,9 +103,17 @@ module.exports = async (client) => {
   
   // We declare a renderTemplate function to make rendering of a template in a route as easy as possible.
   const renderTemplate = (res, req, template, data = {}) => {
+    
+    const botInfo = {
+    username: client.user.username,
+    status: client.user.presence.status,
+    users: client.users.size,
+    guilds: client.guilds.size
+  };
     // Default base data which passed to the ejs template by default. 
     const baseData = {
       bot: client,
+      botInfo: botInfo
       path: req.path,
       user: req.isAuthenticated() ? req.user : null
     };
