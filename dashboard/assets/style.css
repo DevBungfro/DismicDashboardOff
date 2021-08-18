@@ -5,7 +5,7 @@ body {
 }
 
 h1, h2, h3, h4, h5 {
-  color: black
+  color: rgb(41, 14, 160)
 }
 
 code.hljs {
@@ -17,11 +17,11 @@ code.hljs {
 }
 
 .navbar a {
-  color: var(--heading);
+  color: rgb(41, 14, 160)
 }
 
 .table {
-  color: var(--heading);
+  color: rgb(41, 14, 160)
 }
 
 .dropdown-menu {
