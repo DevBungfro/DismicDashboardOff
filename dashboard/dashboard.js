@@ -113,7 +113,7 @@ module.exports = async (client) => {
     // Default base data which passed to the ejs template by default. 
     const baseData = {
       bot: client,
-      botInfo: botInfo
+      botInfo: botInfo,
       path: req.path,
       user: req.isAuthenticated() ? req.user : null
     };
