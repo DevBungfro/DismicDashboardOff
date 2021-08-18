@@ -66,9 +66,8 @@ client.on("message", async (message) => {
   const command = args.shift().toLowerCase();
 
   // If command is ping we send a sample and then edit it with the latency.
-  if (command === "ping") {
-    const roundtripMessage = await message.reply("Pong!");
-    return roundtripMessage.edit(`*${roundtripMessage.createdTimestamp - message.createdTimestamp}ms*`);
+  if (command === "dashboard") {
+    const roundtripMessage = await message.reply(`Your server dashboard is: ${process.env.domain}/dashboard/${message.guild.id}`);
   }
 });
 
