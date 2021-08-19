@@ -183,7 +183,7 @@ app.set('view engine', 'pug');
 
   // Dashboard endpoint.
   app.get("/guilds", checkAuth, (req, res) => {
-    renderTemplate(res, req, "guilds.ejs", { perms: Discord.Permissions });
+    renderTemplate(res, req, "guilds2.pug", { perms: Discord.Permissions });
   });
 
   // Settings endpoint.
