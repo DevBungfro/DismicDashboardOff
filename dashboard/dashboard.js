@@ -131,19 +131,17 @@ app.set('view engine', 'pug');
   },
   passport.authenticate("discord"));
 
-const authClient = require('./dashboard/assets/auth-client');
-  
-app.get('/callback', async (req, res) => {
-  try {
-    const code = req.query.code;
-    const key = await authClient.getAccess(code);
-
-    res.cookies.set('key', key);
-    res.redirect('/dashboard');
-  } catch {
-    res.redirect('/');
-  }
-});
+  // Callback endpoint.
+  app.get("/callback", passport.authenticate("discord", { failureRedirect: "/" }), /* We authenticate the user, if user canceled we redirect him to index. */ (req, res) => {
+    // If user had set a returning url, we redirect him there, otherwise we redirect him to index.
+    if (req.session.backURL) {
+      const url = req.session.backURL;
+      req.session.backURL = null;
+      res.redirect(url);
+    } else {
+      res.redirect("/");
+    }
+  });
 
   // Logout endpoint.
   app.get("/logout", function (req, res) {
