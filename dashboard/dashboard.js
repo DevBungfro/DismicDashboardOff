@@ -114,7 +114,7 @@ app.set('view engine', 'pug');
     if (req.user) {
     req.user.guilds.forEach(guild => {
       const permsOnGuild = new data.perms(guild.permissions);
-      if(!permsOnGuild.has("MANAGE_GUILD")) return;
+      if(!permsOnGuild.has("MANAGE_GUILD") || !client.guilds.cache.get(guild.id)) return;
       
       guilds.push(guild)
     })
