@@ -183,22 +183,22 @@ module.exports = async (client) => {
 
 
   // Dashboard endpoint.
-  app.get("/dashboard", checkAuth, (req, res) => {
-    renderTemplate(res, req, "dashboard.ejs", { perms: Discord.Permissions });
+  app.get("/guilds", checkAuth, (req, res) => {
+    renderTemplate(res, req, "guilds.ejs", { perms: Discord.Permissions });
   });
 
   // Settings endpoint.
-  app.get("/dashboard/:guildID", checkAuth, async (req, res) => {
+  app.get("/guild/:guildID", checkAuth, async (req, res) => {
     // We validate the request, check if guild exists, member is in guild and if member has minimum permissions, if not, we redirect it back.
     const guild = client.guilds.cache.get(req.params.guildID);
-    if (!guild) return res.redirect("/dashboard");
+    if (!guild) return res.redirect("/guilds");
     const member = guild.members.cache.get(req.user.id);
     if(!member){
       try{ await guild.members.fetch();
         member = guild.members.cache.get(req.user.id);
       } catch (err) { console.error(`Couldn't fetch the members of ${guild.id}: ${err}`); }}
-    if (!member) return res.redirect("/dashboard");
-    if (!member.permissions.has("MANAGE_GUILD")) return res.redirect("/dashboard");
+    if (!member) return res.redirect("/guilds");
+    if (!member.permissions.has("MANAGE_GUILD")) return res.redirect("/guilds");
 
     // We retrive the settings stored for this guild.
     var storedSettings = await GuildSettings.findOne({ gid: guild.id });
@@ -215,13 +215,13 @@ module.exports = async (client) => {
   });
 
     // Settings endpoint.
-    app.post("/dashboard/:guildID", checkAuth, async (req, res) => {
+    app.post("/guild/:guildID", checkAuth, async (req, res) => {
         // We validate the request, check if guild exists, member is in guild and if member has minimum permissions, if not, we redirect it back.
         const guild = client.guilds.cache.get(req.params.guildID);
-        if (!guild) return res.redirect("/dashboard");
+        if (!guild) return res.redirect("/guilds");
         const member = guild.members.cache.get(req.user.id);
-        if (!member) return res.redirect("/dashboard");
-        if (!member.permissions.has("MANAGE_GUILD")) return res.redirect("/dashboard");
+        if (!member) return res.redirect("/guilds");
+        if (!member.permissions.has("MANAGE_GUILD")) return res.redirect("/guilds");
         // We retrive the settings stored for this guild.
         var storedSettings = await GuildSettings.findOne({ gid: guild.id });
         if (!storedSettings) {
