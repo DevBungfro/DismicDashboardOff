@@ -4,8 +4,12 @@ body {
   color: var(--font);
 }
 
-h1, h2, h3, h4, h5 {
-  color: rgb(41, 14, 160)
+h1,
+h2,
+h3,
+h4,
+h5 {
+  color: rgb(41, 14, 160);
 }
 
 code.hljs {
@@ -16,14 +20,15 @@ code.hljs {
   max-width: 36px;
 }
 
-.navbar a {
-  color: rgb(41, 14, 160)
+.navbar {
+  color: rgb(41, 14, 160);
 }
 
 .table {
-  color: rgb(41, 14, 160)
+  color: rgb(41, 14, 160);
 }
 
 .dropdown-menu {
   background-color: inherit;
 }
+

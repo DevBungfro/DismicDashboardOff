@@ -1,12 +1,19 @@
 <%- include("partials/header", { bot, user, path, title: "Select server" }) %>
 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/style.css">
+</head>
+
 <div style="display: flex; flex-wrap: wrap; justify-content: center;">
   <% user.guilds.forEach(guild => {
       const permsOnGuild = new perms(guild.permissions);
       if(!permsOnGuild.has("MANAGE_GUILD")) return;
   %>
 
-    <div class="card" style="max-width: 18rem; margin: 2rem; min-width: 10em;">
+    <div class="card" style="max-width: 18rem; margin: 2rem; min-width: 10em; background-color: rgb(14, 24, 160);">
     <%- guild.icon ? `<img src="https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}" class="card-img-top" style="max-width: 18rem;">` : `<img src="https://media.discordapp.net/attachments/877791990169870346/877792002698260500/dBymBmGq_400x400.jpg" class="card-img-top" style="max-width: 18rem;">` %>
       <div class="card-body">
         <h5 class="card-title"><%= guild.name %></h5>
