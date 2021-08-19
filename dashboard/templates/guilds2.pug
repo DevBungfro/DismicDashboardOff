@@ -1,23 +1,12 @@
-<div style="display: flex; flex-wrap: wrap; justify-content: center;">
-  <% user.guilds.forEach(guild => {
-      const permsOnGuild = new perms(guild.permissions);
-      if(!permsOnGuild.has("MANAGE_GUILD")) return;
-  %>
-
-    <div class="card" style="max-width: 18rem; margin: 2rem; min-width: 10em; background-color: rgb(14, 24, 160);">
-    <%- guild.icon ? `<img src="https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}" class="card-img-top" style="max-width: 18rem;">` : `<img src="https://media.discordapp.net/attachments/877791990169870346/877792002698260500/dBymBmGq_400x400.jpg" class="card-img-top" style="max-width: 18rem;">` %>
-      <div class="card-body">
-        <h5 class="card-title"><%= guild.name %></h5>
-        <% if (bot.guilds.cache.get(guild.id)) { %>
-          <p class="card-text">Edit <%= guild.name %>'s settings via the dashboard by clicking the button below.</p>
-          <a href="/guild/<%- guild.id %>" class="btn btn-success text-white">Edit Settings</a>
-        <% } else { %>
-          <p class="card-text">Invite the bot to <%= guild.name %> in order to their this server's settings via the dashboard by clicking the button below.</p>
-          <a href="<%= `https://discordapp.com/oauth2/authorize?client_id=${bot.user.id}&scope=bot&guild_id=${guild.id}&response_type=code&redirect_uri=${encodeURIComponent(`${process.env.domain}${process.env.port == 80 ? "" : `:${process.env.port}`}/callback`)}`  %>" class="btn btn-primary text-white">Invite Bot</a>
-        <% } %>
-      </div>
-    </div>
-  <%
-      });
-  %>
-</div>
+#sidebar.float-left
+  a(href='/dashboard')
+    .icon.round.shadow
+      img.round(alt=user.username, src=user.avatarUrl(64))
+      
+each guild in guilds
+a(href='/servers/' + guild.id)
+      .icon.round.shadow.my-2(data-toggle='tooltip', data-placement='right', title=guild.name)
+        if guild.icon
+          img(alt=guild.name, src=guild.iconURL({ dynamic: true, size: 64 }))
+        else
+          p.text-center.abbr #{guild.nameAcronym}

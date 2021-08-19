@@ -114,7 +114,8 @@ app.set('view engine', 'pug');
       bot: client,
       botInfo: botInfo,
       path: req.path,
-      user: req.isAuthenticated() ? req.user : null
+      user: req.isAuthenticated() ? req.user : null,
+      guilds: req.isAuthenticated() ? req.user.guilds : null
     };
     // We render template using the absolute path of the template and the merged default data with the additional data provided.
     res.render(path.resolve(`${templateDir}${path.sep}${template}`), Object.assign(baseData, data));
