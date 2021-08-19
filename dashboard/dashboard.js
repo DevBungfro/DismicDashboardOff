@@ -86,8 +86,7 @@ module.exports = async (client) => {
   app.locals.domain = process.env.domain.split("//")[1];
 
   // We set out templating engine.
-  app.engine("html", ejs.renderFile);
-  app.set("view engine", "html");
+app.set('view engine', 'pug');
 
   // We initialize body-parser middleware to be able to read forms.
   app.use(bodyParser.json());
@@ -174,7 +173,7 @@ module.exports = async (client) => {
 
   // Index endpoint.
   app.get("/", (req, res) => {
-    renderTemplate(res, req, "index.ejs");
+    renderTemplate(res, req, "index.pug");
   });
   
   app.get("/support", (req, res) => {
