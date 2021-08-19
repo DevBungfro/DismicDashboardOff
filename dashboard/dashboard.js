@@ -109,6 +109,15 @@ app.set('view engine', 'pug');
     users: client.users.size,
     guilds: client.guilds.size
   };
+    
+    const guilds = []
+    
+    req.user.guilds.forEach(guild => {
+      const permsOnGuild = new perms(guild.permissions);
+      if(!permsOnGuild.has("MANAGE_GUILD")) return;
+    })
+    
+    
     // Default base data which passed to the ejs template by default. 
     const baseData = {
       bot: client,
