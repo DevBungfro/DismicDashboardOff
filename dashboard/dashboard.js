@@ -101,7 +101,24 @@ app.set('view engine', 'pug');
   app.use("/", express.static(path.resolve(`${dataDir}${path.sep}assets`)));
   
   // We declare a renderTemplate function to make rendering of a template in a route as easy as possible.
-
+  const renderTemplate = (res, req, template, data = {}) => {
+    
+    const botInfo = {
+    username: client.user.username,
+    status: client.user.presence.status,
+    users: client.users.size,
+    guilds: client.guilds.size
+  };
+    // Default base data which passed to the ejs template by default. 
+    const baseData = {
+      bot: client,
+      botInfo: botInfo,
+      path: req.path,
+      user: req.isAuthenticated() ? req.user : null
+    };
+    // We render template using the absolute path of the template and the merged default data with the additional data provided.
+    res.render(path.resolve(`${templateDir}${path.sep}${template}`), Object.assign(baseData, data));
+  };
 
   // We declare a checkAuth function middleware to check if an user is logged in or not, and if not redirect him.
   const checkAuth = (req, res, next) => {
@@ -155,8 +172,9 @@ app.set('view engine', 'pug');
   });
 
   // Index endpoint.
-  app.get('/', (req, res) => res.render(`${templateDir}/index`));
-
+  app.get("/", (req, res) => {
+    renderTemplate(res, req, "index.pug");
+  });
   
   app.get("/support", (req, res) => {
     res.redirect("https://discord.gg/invite/95QvjUn9pd")
