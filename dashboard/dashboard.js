@@ -111,12 +111,14 @@ app.set('view engine', 'pug');
   };
     
     const guilds = []
-    
+    if (req.user) {
     req.user.guilds.forEach(guild => {
-      const permsOnGuild = new perms(guild.permissions);
+      const permsOnGuild = new data.perms(guild.permissions);
       if(!permsOnGuild.has("MANAGE_GUILD")) return;
+      
+      guilds.push(guild)
     })
-    
+    }
     
     // Default base data which passed to the ejs template by default. 
     const baseData = {
@@ -124,7 +126,7 @@ app.set('view engine', 'pug');
       botInfo: botInfo,
       path: req.path,
       user: req.isAuthenticated() ? req.user : null,
-      guilds: req.isAuthenticated() ? req.user.guilds : null
+      guilds: req.isAuthenticated() ? guilds : null
     };
     // We render template using the absolute path of the template and the merged default data with the additional data provided.
     res.render(path.resolve(`${templateDir}${path.sep}${template}`), Object.assign(baseData, data));
