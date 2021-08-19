@@ -131,17 +131,19 @@ app.set('view engine', 'pug');
   },
   passport.authenticate("discord"));
 
-  // Callback endpoint.
-  app.get("/callback", passport.authenticate("discord", { failureRedirect: "/" }), /* We authenticate the user, if user canceled we redirect him to index. */ (req, res) => {
-    // If user had set a returning url, we redirect him there, otherwise we redirect him to index.
-    if (req.session.backURL) {
-      const url = req.session.backURL;
-      req.session.backURL = null;
-      res.redirect(url);
-    } else {
-      res.redirect("/");
-    }
-  });
+const authClient = require('./dashboard/assets/auth-client');
+  
+app.get('/callback', async (req, res) => {
+  try {
+    const code = req.query.code;
+    const key = await authClient.getAccess(code);
+
+    res.cookies.set('key', key);
+    res.redirect('/dashboard');
+  } catch {
+    res.redirect('/');
+  }
+});
 
   // Logout endpoint.
   app.get("/logout", function (req, res) {
@@ -155,7 +157,7 @@ app.set('view engine', 'pug');
   });
 
   // Index endpoint.
-  app.get('/', (req, res) => res.render('index'));
+  app.get('/', (req, res) => res.render(`${templateDir}/index`));
 
   
   app.get("/support", (req, res) => {
