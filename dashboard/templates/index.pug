@@ -1,15 +1,13 @@
-<%- include("partials/header", { bot, user, path, title: "Home" }) %>
+doctype
+html(lang='en')
+  head
+    include partials/header.pug
 
-<body>
-  
-</body>
-
-<div class="container-sm center" style="margin-top: 25px;">
-  <div class="d-grid gap-2 col-6 mx-auto">
-    <h1>Welcome to the official dismic dashboard!</h1>
-    <a class="btn btn-secondary text-white" href="/guilds">Dashboard</a>
-    <a class="btn btn-secondary text-white" href="/support">Support Server</a>
-  </div>
-</div>
-
-<%- include("partials/footer") %>
+    link(rel='stylesheet', href='/css/index.css')
+  body
+    include partials/navbar.pug
+    .jumbotron.text-center.bg-transparent
+      h1.display-3 Dismic
+      p.lead idk what do add here, soon -- bungfro
+        i.fas.fa-star.pl-2
+      a.btn.btn-dark(href='/invite') Add
