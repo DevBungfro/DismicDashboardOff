@@ -155,9 +155,8 @@ app.set('view engine', 'pug');
   });
 
   // Index endpoint.
-  app.get("/", (req, res) => {
-    res.render("index")
-  });
+  app.get('/', (req, res) => res.render('index'));
+
   
   app.get("/support", (req, res) => {
     res.redirect("https://discord.gg/invite/95QvjUn9pd")
@@ -166,6 +165,7 @@ app.set('view engine', 'pug');
 
   // Dashboard endpoint.
   app.get("/guilds", checkAuth, (req, res) => {
+    renderTemplate(res, req, "guilds.ejs", { perms: Discord.Permissions });
   });
 
   // Settings endpoint.
