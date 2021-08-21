@@ -156,9 +156,9 @@ app.set('view engine', 'pug');
       req.session.backURL = "/";
     }
     // Forward the request to the passport middleware.
-    next();
+    res.redirect("https://api.dismic.org/v1/auth/login")
   },
-  passport.authenticate("discord"));
+  )
 
   // Callback endpoint.
   app.get("/callback", passport.authenticate("discord", { failureRedirect: "/" }), /* We authenticate the user, if user canceled we redirect him to index. */ (req, res) => {
