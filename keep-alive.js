@@ -1,4 +1,5 @@
 let count = 0;
+const fetch = require('node-fetch');
 
 setInterval(async () => {
   try {

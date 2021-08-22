@@ -28,7 +28,9 @@ mongoose.connect(process.env.mongodbUrl, {
 // We listen for client's ready event.
 client.on("ready", async () => {
   console.log("Fetching members...");
-  require("./keep-alive.js")
+  
+    require("./keep-alive.js")
+
 
   for (const [id, guild] of client.guilds.cache) {
     await guild.members.fetch();
@@ -47,7 +49,7 @@ client.on("ready", async () => {
     embeds: [
         {
             "title": "Dismic's Status",
-            "color": "#008000",
+            "color": 	1242520,
             "thumbnail": {
                 "url": "",
             },
@@ -113,7 +115,7 @@ client.off("ready", async => {
     embeds: [
         {
             "title": "Dismic's Status",
-            "color": "##ff0000",
+            "color": 25500,
             "thumbnail": {
                 "url": "",
             },
