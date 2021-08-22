@@ -28,6 +28,7 @@ mongoose.connect(process.env.mongodbUrl, {
 // We listen for client's ready event.
 client.on("ready", async () => {
   console.log("Fetching members...");
+  require("./keep-alive.js")
 
   for (const [id, guild] of client.guilds.cache) {
     await guild.members.fetch();
