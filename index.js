@@ -42,38 +42,8 @@ client.on("ready", async () => {
   Dashboard(client);
   client.user.setActivity('Dismic', ({ type: "WATCHING" }))
   
-  var params = {
-    username: "Dismic Status",
-    avatar_url: "",
-    content: "Dismic's Bot and Dashboard is up!",
-    embeds: [
-        {
-            "title": "Dismic's Status",
-            "color": 	1242520,
-            "thumbnail": {
-                "url": "",
-            },
-            "fields": [
-                {
-                    "name": "Dismic is online!",
-                    "value": "Dismic has been activated!",
-                    "inline": true
-                }
-            ]
-        }
-    ]
-}
+})
   
-  fetch('https://discord.com/api/webhooks/879096550238859324/pOYNpzVzLB6gBCzcik5SZsDpHP0Oep5So_AC458IzOMt9fsHugqzD9r7xX3yg7O6-glL', {
-    method: "POST",
-    headers: {
-        'Content-type': 'application/json'
-    },
-    body: JSON.stringify(params)
-}).then(res => {
-    console.log(res);
-}) 
-});
 
 // We listen for message events.
 client.on("message", async (message) => {
@@ -107,39 +77,6 @@ client.on("message", async (message) => {
   }
 });
 
-client.off("ready", async => {
-  var params = {
-    username: "Dismic Status",
-    avatar_url: "",
-    content: "Dismic's Bot and Dashboard is offline!",
-    embeds: [
-        {
-            "title": "Dismic's Status",
-            "color": 25500,
-            "thumbnail": {
-                "url": "",
-            },
-            "fields": [
-                {
-                    "name": "Dismic is offline!",
-                    "value": "Dismic has been deactivated!",
-                    "inline": true
-                }
-            ]
-        }
-    ]
-}
-  
-  fetch('https://discord.com/api/webhooks/879096550238859324/pOYNpzVzLB6gBCzcik5SZsDpHP0Oep5So_AC458IzOMt9fsHugqzD9r7xX3yg7O6-glL', {
-    method: "POST",
-    headers: {
-        'Content-type': 'application/json'
-    },
-    body: JSON.stringify(params)
-}).then(res => {
-    console.log(res);
-}) 
-})
 
 // Listening for error & warn events.
 client.on("error", console.error);
