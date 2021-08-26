@@ -85,8 +85,10 @@ module.exports = async (client) => {
   // We bind the domain.
   app.locals.domain = process.env.domain.split("//")[1];
 
-  // We set out templating engine.
-app.set('view engine', 'pug');
+var engines = require('consolidate');
+
+app.engine('html', engines.mustache);
+  app.set('view engine', 'html');
 
   // We initialize body-parser middleware to be able to read forms.
   app.use(bodyParser.json());
@@ -185,7 +187,7 @@ app.set('view engine', 'pug');
 
   // Index endpoint.
   app.get("/", (req, res) => {
-    renderTemplate(res, req, "index.pug");
+    renderTemplate(res, req, "index.html");
   });
   
   app.get("/support", (req, res) => {
