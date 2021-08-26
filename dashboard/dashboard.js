@@ -186,7 +186,7 @@ app.set('view engine', 'ejs');
 
   // Index endpoint.
   app.get("/", (req, res) => {
-    renderTemplate(res, req, "index.html");
+    renderTemplate(res, req, "index.ejs");
   });
   
   app.get("/support", (req, res) => {
