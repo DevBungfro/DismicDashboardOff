@@ -85,10 +85,9 @@ module.exports = async (client) => {
   // We bind the domain.
   app.locals.domain = process.env.domain.split("//")[1];
 
-var engines = require('consolidate');
 
-app.engine('html', engines.mustache);
-  app.set('view engine', 'html');
+app.set('view engine', 'ejs');
+
 
   // We initialize body-parser middleware to be able to read forms.
   app.use(bodyParser.json());
