@@ -1,0 +1,14 @@
+<%- include("partials/header", { bot, user, path, title: "Select server" }) %>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/styles.css">
+</head>
+
+<div style="display: flex; flex-wrap: wrap; justify-content: center;">
+  <% bot.commands.forEach(guild => {
+      const permsOnGuild = new perms(guild.permissions);
+      if(!permsOnGuild.has("MANAGE_GUILD")) return;
+  %>

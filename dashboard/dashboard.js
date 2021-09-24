@@ -198,6 +198,11 @@ app.set('view engine', 'ejs');
   app.get("/guilds", checkAuth, (req, res) => {
     renderTemplate(res, req, "guilds.ejs", { perms: Discord.Permissions });
   });
+  
+  app.get("/commands", checkAuth, (req, res) => {
+    renderTemplate(res, req, "commands.ejs", { perms: Discord.Permissions });
+  });
+
 
   // Settings endpoint.
   app.get("/guild/:guildID", checkAuth, async (req, res) => {

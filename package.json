@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/MrAugu/discord-bot-dashboard#readme",
   "dependencies": {
+    "ascii-table": "0.0.9",
     "body-parser": "^1.19.0",
     "consolidate": "^0.16.0",
     "discord.js": "^12.1.1",

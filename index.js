@@ -20,6 +20,17 @@ const client = new Discord.Client({
   }
 });
 
+const fs = require("fs")
+
+//HANDLER VARIABLES
+client.commands = new Discord.Collection();
+client.aliases = new Discord.Collection();
+
+//HANDLER PATH INITIALIZATION
+["command"].forEach(handler => {
+  require(`./handlers/${handler}`)(client);
+});
+
 mongoose.connect(process.env.mongodbUrl, {
   useNewUrlParser: true,
   useUnifiedTopology: true
@@ -69,12 +80,17 @@ client.on("message", async (message) => {
 
   // We remove the prefix from the message and process the arguments.
   const args = message.content.slice(storedSettings.prefix.length).trim().split(/ +/g);
-  const command = args.shift().toLowerCase();
+  const cmd = args.shift().toLowerCase();
+  
+  let command = client.commands.get(cmd);
+  
+//IF COMMAND IS NOT FOUND IT SEARCHES FOR THE ALIASES
+  if (!command) command = client.commands.get(client.aliases.get(cmd));
+  
+//IF IT RECOGNISES IT AS AN COMMAND IT RUNS THE COMMAND
+if (command) command.run(client, message, args);
 
-  // If command is ping we send a sample and then edit it with the latency.
-  if (command === "dashboard") {
-    const roundtripMessage = await message.reply(`Your server dashboard is: ${process.env.domain}/guild/${message.guild.id}`);
-  }
+
 });
 
 
