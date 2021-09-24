@@ -296,10 +296,9 @@ module.exports = async client => {
     });
   });
 
-  app.get("*", function(req, res) {
-    renderTemplate(res, req, "general.ejs", {
-      currentURL: `${req.protocol}://${req.get("host")}${req.originalUrl}`
-    });
+  app.use(function(req, res, next) {
+    res.status(404);
+    renderTemplate(res, req, "404.ejs");
   });
 
   app.listen(process.env.port, null, null, () =>
