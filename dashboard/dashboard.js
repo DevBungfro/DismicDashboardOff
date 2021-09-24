@@ -204,7 +204,7 @@ app.set('view engine', 'ejs');
   });
 
   app.get("/guild/:guildID", checkAuth, async (req, res) => {
-res.redirect("/guild:guildID/general")
+     res.redirect("/guild/" + req.params.guildID + "/general")
     
   });
   // Settings endpoint.
