@@ -203,9 +203,12 @@ app.set('view engine', 'ejs');
     renderTemplate(res, req, "commands.ejs", { perms: Discord.Permissions });
   });
 
-
-  // Settings endpoint.
   app.get("/guild/:guildID", checkAuth, async (req, res) => {
+res.redirect("/guild:guildID/general")
+    
+  });
+  // Settings endpoint.
+  app.get("/guild/:guildID/general", checkAuth, async (req, res) => {
     // We validate the request, check if guild exists, member is in guild and if member has minimum permissions, if not, we redirect it back.
     const guild = client.guilds.cache.get(req.params.guildID);
     if (!guild) return res.redirect("/guilds");
@@ -228,11 +231,11 @@ app.set('view engine', 'ejs');
       storedSettings = await GuildSettings.findOne({ gid: guild.id });
     }
   
-    renderTemplate(res, req, "settings.ejs", { guild, settings: storedSettings, alert: null });
+    renderTemplate(res, req, "general.ejs", { guild, settings: storedSettings, alert: null });
   });
 
     // Settings endpoint.
-    app.post("/guild/:guildID", checkAuth, async (req, res) => {
+    app.post("/guild/:guildID/general", checkAuth, async (req, res) => {
         // We validate the request, check if guild exists, member is in guild and if member has minimum permissions, if not, we redirect it back.
         const guild = client.guilds.cache.get(req.params.guildID);
         if (!guild) return res.redirect("/guilds");
@@ -256,7 +259,7 @@ app.set('view engine', 'ejs');
         await storedSettings.save().catch(() => {});
 
         // We render the template with an alert text which confirms that settings have been saved.
-        renderTemplate(res, req, "settings.ejs", { guild, settings: storedSettings, alert: "Your settings have been saved." });
+        renderTemplate(res, req, "general.ejs", { guild, settings: storedSettings, alert: "Your settings have been saved." });
     });
 
   app.listen(process.env.port, null, null, () => console.log(`Dashboard is up and running on port ${process.env.port}.`));
