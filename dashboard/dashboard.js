@@ -253,7 +253,8 @@ module.exports = async client => {
       settings: storedSettings,
       alert: null,
       gid: req.params.guildID,
-      nickname: guild.members.cache.get(client.user.id).displayName
+      nickname: guild.members.cache.get(client.user.id).displayName,
+      premium: storedSettings.premium
     });
   });
 
@@ -288,7 +289,8 @@ module.exports = async client => {
       settings: storedSettings,
       alert: "Your settings have been saved.",
       gid: req.params.guildID,
-      nickname: guild.members.cache.get(client.user.id).displayName
+      nickname: guild.members.cache.get(client.user.id).displayName,
+      premium: storedSettings.premium
     });
   });
 
