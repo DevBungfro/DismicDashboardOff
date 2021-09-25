@@ -104,7 +104,7 @@
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="javascript:void(0)">
-                  <img src= <% user.user.avatarURL() %> alt="Sorry, cannot load this image :(" width="500" height="600">
+                  <a src= <% user.username %> alt="Sorry, cannot load this image :(" width="500" height="600">
 
                   <p class="d-lg-none d-md-block">
                     Account
@@ -126,18 +126,20 @@
                   <p class="card-category">Edit General Commands</p>
                 </div>
                 <div class="card-body">
-                  <form>
+                <form method="POST">
                     <div class="row">
                       <div class="col-md-5">
                         <div class="form-group">
-                          <label class="bmd-label-floating">Company (disabled)</label>
-                          <input type="text" class="form-control" disabled>
+                          <label class="bmd-label-floating">Prefix</label>
+                          <input type="text" class="form-control" name="nickname" value="<%= bot.prefix %>" placeholder="Your prefix.">
+
                         </div>
                       </div>
                       <div class="col-md-3">
                         <div class="form-group">
-                          <label class="bmd-label-floating">Username</label>
-                          <input type="text" class="form-control">
+                         <label class="bmd-label-floating">Prefix</label>
+                          <input type="text" class="form-control" name="prefix" value="<%= settings.prefix %>" placeholder="Your prefix.">
+
                         </div>
                       </div>
                       <div class="col-md-4">
