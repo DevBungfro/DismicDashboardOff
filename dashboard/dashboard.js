@@ -254,7 +254,9 @@ module.exports = async client => {
       alert: null,
       gid: req.params.guildID,
       nickname: guild.members.cache.get(client.user.id).displayName,
-      premium: storedSettings.premium
+      premium: storedSettings.premium,
+      loglink: "/guild/" + guild.id + "/logging"
+      moderationlink: "/guild/" + guild.id + "/moderation"
     });
   });
 
