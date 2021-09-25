@@ -298,7 +298,12 @@ module.exports = async client => {
 
   app.use(function(req, res, next) {
     res.status(404);
-    renderTemplate(res, req, "404.ejs");
+    let data = {
+        code: 404,
+        shortDescription: "Not found",
+        description: "The page you're looking for can't be found."
+    }
+    renderTemplate(res, req, "404.ejs", data);
   });
 
   app.listen(process.env.port, null, null, () =>
