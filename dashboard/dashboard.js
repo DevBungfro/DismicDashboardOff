@@ -255,7 +255,7 @@ module.exports = async client => {
       gid: req.params.guildID,
       nickname: guild.members.cache.get(client.user.id).displayName,
       premium: storedSettings.premium,
-      loglink: "/guild/" + guild.id + "/logging"
+      loglink: "/guild/" + guild.id + "/logging",
       moderationlink: "/guild/" + guild.id + "/moderation"
     });
   });
@@ -292,7 +292,83 @@ module.exports = async client => {
       alert: "Your settings have been saved.",
       gid: req.params.guildID,
       nickname: guild.members.cache.get(client.user.id).displayName,
-      premium: storedSettings.premium
+      premium: storedSettings.premium,
+
+    });
+  });
+  
+    app.get("/guild/:guildID/logging", checkAuth, async (req, res) => {
+    // We validate the request, check if guild exists, member is in guild and if member has minimum permissions, if not, we redirect it back.
+    const guild = client.guilds.cache.get(req.params.guildID);
+    if (!guild) return res.redirect("/guilds");
+    const member = guild.members.cache.get(req.user.id);
+    if (!member) {
+      try {
+        await guild.members.fetch();
+        member = guild.members.cache.get(req.user.id);
+      } catch (err) {
+        console.error(`Couldn't fetch the members of ${guild.id}: ${err}`);
+      }
+    }
+    if (!member) return res.redirect("/guilds");
+    if (!member.permissions.has("MANAGE_GUILD")) return res.redirect("/guilds");
+
+    // We retrive the settings stored for this guild.
+    var storedSettings = await GuildSettings.findOne({ gid: guild.id });
+    if (!storedSettings) {
+      // If there are no settings stored for this guild, we create them and try to retrive them again.
+      const newSettings = new GuildSettings({
+        gid: guild.id
+      });
+      await newSettings.save().catch(() => {});
+      storedSettings = await GuildSettings.findOne({ gid: guild.id });
+    }
+
+    renderTemplate(res, req, "logging.ejs", {
+      guild,
+      settings: storedSettings,
+      alert: null,
+      gid: req.params.guildID,
+      nickname: guild.members.cache.get(client.user.id).displayName,
+      premium: storedSettings.premium,
+      loglink: "/guild/" + guild.id + "/logging",
+      moderationlink: "/guild/" + guild.id + "/moderation"
+    });
+  });
+
+  // Settings endpoint.
+  app.post("/guild/:guildID/logging", checkAuth, async (req, res) => {
+    // We validate the request, check if guild exists, member is in guild and if member has minimum permissions, if not, we redirect it back.
+    const guild = client.guilds.cache.get(req.params.guildID);
+    if (!guild) return res.redirect("/guilds");
+    const member = guild.members.cache.get(req.user.id);
+    if (!member) return res.redirect("/guilds");
+    if (!member.permissions.has("MANAGE_GUILD")) return res.redirect("/guilds");
+    // We retrive the settings stored for this guild.
+    var storedSettings = await GuildSettings.findOne({ gid: guild.id });
+    if (!storedSettings) {
+      // If there are no settings stored for this guild, we create them and try to retrive them again.
+      const newSettings = new GuildSettings({
+        gid: guild.id
+      });
+      await newSettings.save().catch(() => {});
+      storedSettings = await GuildSettings.findOne({ gid: guild.id });
+    }
+
+    // We set the prefix of the server settings to the one that was sent in request from the form.
+
+    // We save the settings.
+    await storedSettings.save().catch(() => {});
+
+    // We render the template with an alert text which confirms that settings have been saved.
+    renderTemplate(res, req, "logging.ejs", {
+      guild,
+      settings: storedSettings,
+      alert: "Your settings have been saved.",
+      gid: req.params.guildID,
+      nickname: guild.members.cache.get(client.user.id).displayName,
+      premium: storedSettings.premium,
+
     });
   });
 
