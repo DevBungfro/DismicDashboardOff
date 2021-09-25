@@ -41,6 +41,9 @@
 
         Tip 2: you can also add an image using data-image tag
     -->
+      
+      
+      
       <div class="logo"><a href="http://www.creative-tim.com" class="simple-text logo-normal">
           Creative Tim
         </a></div>
@@ -63,6 +66,8 @@
       </div>
     </div>
     <div class="main-panel">
+      
+      
       <!-- Navbar -->
       <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top " id="navigation-example">
         <div class="container-fluid">
@@ -104,7 +109,6 @@
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="javascript:void(0)">
-                  <a src= <% user.username %> alt="Sorry, cannot load this image :(" width="500" height="600">
 
                   <p class="d-lg-none d-md-block">
                     Account
@@ -115,8 +119,19 @@
           </div>
         </div>
       </nav>
+      
+      
       <!-- End Navbar -->
       <div class="content">
+               <% if (alert !== null) { %>
+        <div class="col-md-4">
+                        <button class="btn btn-primary btn-block" onclick="md.showNotification('top','right')">Top Right</button>
+                      </div>
+</div>
+        <% } else { %>
+            
+        <% } %>
+      
         <div class="container-fluid">
           <div class="row">
             <div class="col-md-8">
@@ -178,7 +193,8 @@
                 </div>
               </div>
             </div>
-      
+            
+   
       
       <script>
         const x = new Date().getFullYear();
