@@ -72,11 +72,20 @@ client.on("guildMemberAdd", async (member) => {
     
     let msg = storedSettings.joinmsg
     
-    msg.replace("%user%", member.username);
-    msg.replace("%guild%", member.guild.name);
+
     
     
-    channel.send(msg)
+    channel.send(msg.replace(/%user%|%guild%/g, function(w){
+
+        switch(w){
+           case '%guild%':
+                 return member.guild.name ;
+
+              case '%user%':
+                   return member.user.username;
+          }
+
+    }))
 
     
     
