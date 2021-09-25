@@ -143,6 +143,7 @@ module.exports = async client => {
       user: req.isAuthenticated() ? req.user : null,
       guilds: req.isAuthenticated() ? guilds : null
     };
+    
     // We render template using the absolute path of the template and the merged default data with the additional data provided.
     res.render(
       path.resolve(`${templateDir}${path.sep}${template}`),
