@@ -291,7 +291,7 @@ module.exports = async client => {
       settings: storedSettings,
       alert: "Your settings have been saved.",
       gid: req.params.guildID,
-      nickname: guild.members.cache.get(client.user.id).displayName,
+      nickname: req.body.nickname,
       premium: storedSettings.premium,
 
     });
@@ -353,6 +353,8 @@ module.exports = async client => {
     }
 
     // We set the prefix of the server settings to the one that was sent in request from the form.
+      storedSettings.joinmsg = req.body.joinmsg
+      storedSettings.joinchannel = req.body.joinchannel
 
     // We save the settings.
     await storedSettings.save().catch(() => {});

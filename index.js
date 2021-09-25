@@ -55,6 +55,17 @@ client.on("ready", async () => {
   
 })
   
+client.on("guildMemberAdd", async (member) => {
+    var storedSettings = await GuildSettings.findOne({ gid: member.guild.id });
+  if (!storedSettings) {
+    // If there are no settings stored for this guild, we create them and try to retrive them again.
+    const newSettings = new GuildSettings({
+      gid: member.guild.id
+    });
+    await newSettings.save().catch(()=>{});
+    storedSettings = await GuildSettings.findOne({ gid: member.guild.id });
+  }
+})
 
 // We listen for message events.
 client.on("message", async (message) => {
