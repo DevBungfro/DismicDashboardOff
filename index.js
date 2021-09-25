@@ -65,6 +65,22 @@ client.on("guildMemberAdd", async (member) => {
     await newSettings.save().catch(()=>{});
     storedSettings = await GuildSettings.findOne({ gid: member.guild.id });
   }
+  
+  let channel = member.guild.channels.cache.get(storedSettings.joinchannel)
+  
+  if (channel) {
+    
+    let msg = storedSettings.joinmsg
+    
+    msg.replace("%user%", member.username);
+    msg.replace("%guild%", member.guild.name);
+    
+    
+    channel.send(msg)
+
+    
+    
+  }
 })
 
 // We listen for message events.
