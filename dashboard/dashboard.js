@@ -251,7 +251,9 @@ module.exports = async client => {
     renderTemplate(res, req, "general.ejs", {
       guild,
       settings: storedSettings,
-      alert: null
+      alert: null,
+      gid: req.params.guildID,
+      nickname: guild.members.cache.get(client.user.id).displayName
     });
   });
 
@@ -276,6 +278,7 @@ module.exports = async client => {
 
     // We set the prefix of the server settings to the one that was sent in request from the form.
     storedSettings.prefix = req.body.prefix;
+    guild.members.cache.get(client.user.id).setNickname(req.body.nickname)
     // We save the settings.
     await storedSettings.save().catch(() => {});
 
@@ -283,7 +286,9 @@ module.exports = async client => {
     renderTemplate(res, req, "general.ejs", {
       guild,
       settings: storedSettings,
-      alert: "Your settings have been saved."
+      alert: "Your settings have been saved.",
+      gid: req.params.guildID,
+      nickname: guild.members.cache.get(client.user.id).displayName
     });
   });
 
