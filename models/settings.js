@@ -5,6 +5,7 @@ const { Schema, model } = require("mongoose");
 const guildSettingSchema = new Schema({
   gid: { type: String },
   prefix: { type: String, default: "!" },
+  joinmsg: { type: String, default: "Welcome %user% to %guild%!" },
   premium: { type: Boolean, default: false }
 });
 

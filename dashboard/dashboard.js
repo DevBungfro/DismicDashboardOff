@@ -327,12 +327,9 @@ module.exports = async client => {
     renderTemplate(res, req, "logging.ejs", {
       guild,
       settings: storedSettings,
-      alert: null,
-      gid: req.params.guildID,
-      nickname: guild.members.cache.get(client.user.id).displayName,
+      alert: "Your settings have been saved.",
+      joinmsg: storedSettings.joinmsg,
       premium: storedSettings.premium,
-      loglink: "/guild/" + guild.id + "/logging",
-      moderationlink: "/guild/" + guild.id + "/moderation"
     });
   });
 
@@ -365,8 +362,7 @@ module.exports = async client => {
       guild,
       settings: storedSettings,
       alert: "Your settings have been saved.",
-      gid: req.params.guildID,
-      nickname: guild.members.cache.get(client.user.id).displayName,
+      joinmsg: storedSettings.joinmsg,
       premium: storedSettings.premium,
 
     });
