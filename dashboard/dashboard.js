@@ -143,7 +143,7 @@ module.exports = async client => {
       user: req.isAuthenticated() ? req.user : null,
       guilds: req.isAuthenticated() ? guilds : null
     };
-    
+
     // We render template using the absolute path of the template and the merged default data with the additional data provided.
     res.render(
       path.resolve(`${templateDir}${path.sep}${template}`),
@@ -212,8 +212,8 @@ module.exports = async client => {
   app.get("/guilds", checkAuth, (req, res) => {
     renderTemplate(res, req, "guilds.ejs", { perms: Discord.Permissions });
   });
-  
-   app.get("/premium", checkAuth, (req, res) => {
+
+  app.get("/premium", checkAuth, (req, res) => {
     renderTemplate(res, req, "premium.ejs", { perms: Discord.Permissions });
   });
 
@@ -285,7 +285,7 @@ module.exports = async client => {
 
     // We set the prefix of the server settings to the one that was sent in request from the form.
     storedSettings.prefix = req.body.prefix;
-    guild.members.cache.get(client.user.id).setNickname(req.body.nickname)
+    guild.members.cache.get(client.user.id).setNickname(req.body.nickname);
     // We save the settings.
     await storedSettings.save().catch(() => {});
 
@@ -296,12 +296,11 @@ module.exports = async client => {
       alert: "Your settings have been saved.",
       gid: req.params.guildID,
       nickname: req.body.nickname,
-      premium: storedSettings.premium,
-
+      premium: storedSettings.premium
     });
   });
-  
-    app.get("/guild/:guildID/logging", checkAuth, async (req, res) => {
+
+  app.get("/guild/:guildID/logging", checkAuth, async (req, res) => {
     // We validate the request, check if guild exists, member is in guild and if member has minimum permissions, if not, we redirect it back.
     const guild = client.guilds.cache.get(req.params.guildID);
     if (!guild) return res.redirect("/guilds");
@@ -333,13 +332,12 @@ module.exports = async client => {
       settings: storedSettings,
       alert: "Your settings have been saved.",
       joinmsg: storedSettings.joinmsg,
-      premium: storedSettings.premium,
+      premium: storedSettings.premium
     });
   });
 
   // Settings endpoint.
   app.post("/guild/:guildID/logging", checkAuth, async (req, res) => {
-    console.log(req)
     // We validate the request, check if guild exists, member is in guild and if member has minimum permissions, if not, we redirect it back.
     const guild = client.guilds.cache.get(req.params.guildID);
     if (!guild) return res.redirect("/guilds");
@@ -357,9 +355,15 @@ module.exports = async client => {
       storedSettings = await GuildSettings.findOne({ gid: guild.id });
     }
 
+    if (req.body.checkAddress == "on") {
+      storedSettings.joinon = true;
+    } else {
+      storedSettings.joinon = false;
+    }
+
     // We set the prefix of the server settings to the one that was sent in request from the form.
-      storedSettings.joinmsg = req.body.joinmsg
-      storedSettings.joinchannel = req.body.joinchannel
+    storedSettings.joinmsg = req.body.joinmsg;
+    storedSettings.joinchannel = req.body.joinchannel;
 
     // We save the settings.
     await storedSettings.save().catch(() => {});
@@ -370,8 +374,7 @@ module.exports = async client => {
       settings: storedSettings,
       alert: "Your settings have been saved.",
       joinmsg: storedSettings.joinmsg,
-      premium: storedSettings.premium,
-
+      premium: storedSettings.premium
     });
   });
 
@@ -388,10 +391,10 @@ module.exports = async client => {
   app.use(function(req, res, next) {
     res.status(404);
     let data = {
-        code: 404,
-        shortDescription: "Not found",
-        description: "The page you're looking for can't be found."
-    }
+      code: 404,
+      shortDescription: "Not found",
+      description: "The page you're looking for can't be found."
+    };
     renderTemplate(res, req, "404.ejs", data);
   });
 
