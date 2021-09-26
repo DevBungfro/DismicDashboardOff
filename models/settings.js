@@ -7,6 +7,7 @@ const guildSettingSchema = new Schema({
   prefix: { type: String, default: "!" },
   joinmsg: { type: String, default: "Welcome %user% to %guild%!" },
   joinchannel: { type: String, default: "None" },
+  joinon: { type: Boolean, default: false },
   premium: { type: Boolean, default: false }
 });
 

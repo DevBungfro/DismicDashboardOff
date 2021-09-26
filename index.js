@@ -68,7 +68,7 @@ client.on("guildMemberAdd", async (member) => {
   
   let channel = member.guild.channels.cache.get(storedSettings.joinchannel)
   
-  if (channel) {
+  if (channel && storedSettings.joinon == true) {
     
     let msg = storedSettings.joinmsg
     

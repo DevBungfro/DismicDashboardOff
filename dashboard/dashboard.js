@@ -339,6 +339,7 @@ module.exports = async client => {
 
   // Settings endpoint.
   app.post("/guild/:guildID/logging", checkAuth, async (req, res) => {
+    console.log(req)
     // We validate the request, check if guild exists, member is in guild and if member has minimum permissions, if not, we redirect it back.
     const guild = client.guilds.cache.get(req.params.guildID);
     if (!guild) return res.redirect("/guilds");
