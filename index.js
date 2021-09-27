@@ -25,6 +25,7 @@ const fs = require("fs")
 //HANDLER VARIABLES
 client.commands = new Discord.Collection();
 client.aliases = new Discord.Collection();
+client.cooldowns = new Discord.Collection();
 
 //HANDLER PATH INITIALIZATION
 ["command"].forEach(handler => {
@@ -119,15 +120,56 @@ client.on("message", async (message) => {
   const cmd = args.shift().toLowerCase();
   
   let command = client.commands.get(cmd);
-  
+  let cooldown = client.cooldowns.get(cmd);
+
 //IF COMMAND IS NOT FOUND IT SEARCHES FOR THE ALIASES
   if (!command) command = client.commands.get(client.aliases.get(cmd));
-  
-//IF IT RECOGNISES IT AS AN COMMAND IT RUNS THE COMMAND
-if (command) command.run(client, message, args);
+  if (!cooldown) cooldown = client.cooldowns.get(client.aliases.get(cmd));
+
+    if (onCoolDown(message, command, cooldown)) {
+      let cool = new Discord.MessageEmbed()
+      .setDescription(`❌ Please wait ${onCoolDown(message, command, cooldown)} more Second(s) before reusing the ${command.name} command.`)
+      return message.channel.send({embeds : [cool]})
+    }if (command) command.run(client, message, args);
 
 
 });
+
+ function onCoolDown(message, command, cooldown) {
+    if(!message || !message.client) throw "No Message with a valid DiscordClient granted as First Parameter";
+    if(!command || !command.name) throw "No Command with a valid Name granted as Second Parameter";
+    const client = message.client;
+    if (!client.cooldowns.has(command.name)) { //if its not in the cooldown, set it too there
+      client.cooldowns.set(command.name, new Discord.Collection());
+    }
+    const now = Date.now(); //get the current time
+    const timestamps = client.cooldowns.get(command.name); //get the timestamp of the last used commands
+    const cooldownAmount = (cooldown) * 1000; //get the cooldownamount of the command, if there is no cooldown there will be automatically 1 sec cooldown, so you cannot spam it^^
+    if (timestamps.has(message.author.id)) { //if the user is on cooldown
+      const expirationTime = timestamps.get(message.author.id) + cooldownAmount; //get the amount of time he needs to wait until he can run the cmd again
+      if (now < expirationTime) { //if he is still on cooldonw
+        const timeLeft = (expirationTime - now) / 1000; //get the lefttime
+        //return true
+        return timeLeft
+      }
+      else {
+        //if he is not on cooldown, set it to the cooldown
+        timestamps.set(message.author.id, now); 
+        //set a timeout function with the cooldown, so it gets deleted later on again
+        setTimeout(() => timestamps.delete(message.author.id), cooldownAmount); 
+        //return false aka not on cooldown
+        return false;
+      }
+    }
+    else {
+      //if he is not on cooldown, set it to the cooldown
+      timestamps.set(message.author.id, now); 
+      //set a timeout function with the cooldown, so it gets deleted later on again
+      setTimeout(() => timestamps.delete(message.author.id), cooldownAmount); 
+      //return false aka not on cooldown
+      return false;
+    }
+  }
 
 
 // Listening for error & warn events.

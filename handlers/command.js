@@ -21,6 +21,8 @@ for (let file of commands) {
 
       if (pull.name) {
         client.commands.set(pull.name, pull);
+        client.cooldowns.set(pull.name, pull.cooldown);
+
         table.addRow(file, "✅");
       } else {
         table.addRow(
