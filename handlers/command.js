@@ -1,13 +1,17 @@
 //INITIALIZATION
 const { readdirSync } = require("fs");
 const ascii = require("ascii-table");
+const { glob } = require("glob");
+const { promisify } = require("util");
+const { Client } = require("discord.js");
 
+const globPromise = promisify(glob);
 //NEW ASCII TABLE
 let table = new ascii("Commands");
 table.setHeading("Command", "Command Load Status");
 
 //NEW MODULE
-module.exports = client => {
+module.exports = async client => {
   //READS EVERY COMMAND IN COMMANDS FOLDER
   readdirSync("./commands/").forEach(dir => {
     //READS ONLY JS FILES
@@ -40,4 +44,20 @@ if (pull.aliases && Array.isArray(pull.aliases))
   
 //LOG THE TABLE IN THE CONSOLE IN STRING FORM
 console.log(table.toString());
+  
+      const slashCommands = await globPromise(
+        `${process.cwd()}/SlashCommands/*/*.js`
+    );
+
+    const arrayOfSlashCommands = [];
+    slashCommands.map((value) => {
+        const file = require(value);
+        if (!file?.name) return;
+        client.slashCommands.set(file.name, file);
+        if (["MESSAGE", "USER"].includes(file.type)) delete file.description;
+        arrayOfSlashCommands.push(file);
+    });
+    client.on("ready", async () => {
+        await client.application.commands.set(arrayOfSlashCommands);
+    });
 };

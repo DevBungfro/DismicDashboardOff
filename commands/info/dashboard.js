@@ -2,7 +2,7 @@ module.exports = {
   name: "dashboard",
   aliases: [],
   category: "info",
-  description: "",
+  description: "Find your guild's dashboard link",
   usage: "",
   cooldown: 5000,
   run: async (client, message, args) => {

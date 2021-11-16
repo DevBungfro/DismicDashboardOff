@@ -1,45 +1,51 @@
-<nav class="navbar is-light is-fixed-top" role="navigation" aria-label="main navigation">
-    <div class="container">
-        <div class="navbar-brand">
-            <a class="navbar-item" href="/">
-                    <img src="https://beta.discordspark.com/icons/Spark-icon-no-bg.svg" width="32" height="32">
-            <p style="margin-left: 4px;">Dashboard</p><span style="margin-left: 6px;" class="button is-static is-outlined is-danger">Beta</span>
-                </a>
-            <div data-target="navMenu" class="navbar-burger">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-
-        </div>
-        <div class="navbar-menu" id="navMenu">
-            <div class="navbar-start">
-                <a href="/" class="navbar-item"> Home </a>
-            </div>
-    </div>
-</nav>
-<section class="section hero is-light is-medium">
-    <div class="container">
-        <h1 class="title is-3"><span class="tag is-large is-danger"><%- code %></span> <%-shortDescription %></h1>
-        <h1 class="subtitle is-5"><%- description %></h1>
-    </div>
-</section>
-<section class="section">
-
-</section>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-                var $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
-                if ($navbarBurgers.length > 0) {
-                    $navbarBurgers.forEach(function($el) {
-                        $el.addEventListener('click', function() {
-                            var target = $el.dataset.target;
-                            var $target = document.getElementById(target);
-                            $el.classList.toggle('is-active');
-                            $target.classList.toggle('is-active');
-                        });
-                    });
-                }
-            })
-</script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>404</title>
+    <style>
+    *{
+        transition: all 0.6s;
+    }
+    html {
+        height: 100%;
+    }
+    body{
+        font-family: 'Lato', sans-serif;
+        color: #888;
+        margin: 0;
+    }
+    #main{
+        display: table;
+        width: 100%;
+        height: 100vh;
+        text-align: center;
+    }
+    .fof{
+	  display: table-cell;
+	  vertical-align: middle;
+    }
+    .fof h1{
+	  font-size: 50px;
+	  display: inline-block;
+	  padding-right: 12px;
+	  animation: type .5s alternate infinite;
+    }
+    @keyframes type{
+	  from{box-shadow: inset -3px 0px 0px #888;}
+	  to{box-shadow: inset -3px 0px 0px transparent;}
+    }
+    </style>
+</head>
+<body>
+    <div id="main">
+    	<div class="fof">
+        		<h1>404</h1>
+                <h2>Oops! This Page Could Not Be Found</h2>
+                <a href="javascript:history.back()">Go Back</a>
+    	</div>
+</div>
+</body>
+</html>

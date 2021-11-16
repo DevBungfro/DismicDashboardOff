@@ -19743,23 +19743,23 @@ Copyright (c) 2015 Daniel Eden
 
 .dark-edition .btn.btn-primary {
   color: #fff;
-  background-color: #913f9e;
-  border-color: #913f9e;
+  background-color: #1c283c;
+  border-color: #1c283c;
   box-shadow: 0 2px 2px 0 rgba(145, 63, 158, 0.14), 0 3px 1px -2px rgba(145, 63, 158, 0.2), 0 1px 5px 0 rgba(145, 63, 158, 0.12);
 }
 
 .dark-edition .btn.btn-primary:hover {
   color: #fff;
-  background-color: #9b43a9;
-  border-color: #692e72;
+  background-color: #1c283c;
+  border-color: #1c283c;
 }
 
 .dark-edition .btn.btn-primary:focus,
 .dark-edition .btn.btn-primary.focus,
 .dark-edition .btn.btn-primary:hover {
   color: #fff;
-  background-color: #9b43a9;
-  border-color: #692e72;
+  background-color: #1c283c;
+  border-color: #1c283c;
 }
 
 .dark-edition .btn.btn-primary:active,
@@ -20680,7 +20680,7 @@ Copyright (c) 2015 Daniel Eden
 .dark-edition .card.bg-primary,
 .dark-edition .card.card-rotate.bg-primary .front,
 .dark-edition .card.card-rotate.bg-primary .back {
-  background: linear-gradient(60deg, #7b1fa2, #913f9e);
+  background: linear-gradient(60deg, #1c283c, #191e3a);
 }
 
 .dark-edition .primary-link {

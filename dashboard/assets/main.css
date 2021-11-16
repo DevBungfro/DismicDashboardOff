@@ -1,335 +1,223 @@
-/*                IMPORTS              */
+body {
+    font-family: 'Poppins', sans-serif !important;
+    background-color: #060818;
+    color: #fff;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    border-top: 6px #060818 solid !important;
+    font-size: 16px;
+}
 
-@import url('https://fonts.googleapis.com/css2?family=Bungee&display=swap');
+.nav-link {
+     font-size: 14px !important;
+     background: transparent !important;
+     font-family: Lato, sans-serif !important;
+     text-transform: capitalize !important;
+ }
+ .nav-link:hover {
+     background: transparent !important;
+     color: #191e3a !important;
+     font-weight: bold !important;
+ }
 
-@import url('https://fonts.googleapis.com/css2?family=Black+Ops+One&display=swap');
+ .login-btn {
+     border: 2px solid #191e3a !important;
+     font-size: 10px !important;
+ }
+ .login-btn:hover {
+     background: #191e3a !important;
+ }
+.navbar {
+    box-shadow: none !important
+}
 
-@import url('https://fonts.googleapis.com/css2?family=Aldrich&display=swap');
+.navbar-brand {
+    font-size: 25px !important
+}
 
+.navbar-toggler-icon {
+    color: #fff !important
+}
 
-/*                         GENERAL           */
+.btn {
+    border-radius: 10px !important;
+    font-size: 16px !important;
+    font-weight: 600 !important;
+    text-transform: uppercase !important;
+}
 
-html {
-    background-color: #005073;
-    user-select: none;
-    scroll-behavior: smooth;
-    overflow-x: hidden;
+.btn-primary {
+    background-color: #191e3a!important
+}
+.btn-secondary {
+    background-color: #191e3a !important
+}
+.heading {
+    padding: 160px 50px !important;
+    color: #fff !important;
+    background-image: url("../assets/wavy-purple-by-nouridio.svg") !important;
+    background-position: bottom !important;
+    background-size: 300% !important;
+    background-repeat: no-repeat !important;
+}
+
+.title {
+    line-height: 90px !important;
+    margin-bottom: -2px !important;
+    font-size: 36px !important
+}
+
+.subtitle {
+    color: rgba(255, 255, 255, 0.685) !important;
+    font-size: 16px !important;
+    font-family: 'Lato', sans-serif;
 }
 
 
-/*                             NAVBAR               */
-
-nav {
-    background-color: #005073;
-    padding: 20px 0 20px 0;
-    transition: 0.2s;
+.features {
+    text-align: center !important;
+    background: #0e1726 !important;
+    padding: 60px 50px !important;
+    background-image: url("../assets/wavy-dark-by-nouridio.svg") !important;
+    background-position: bottom !important;
+    background-size: 200% !important;
+    background-repeat: no-repeat !important;
+}
+.features .title {
+    font-size: 40px !important;
+    color: #ffffff !important;
+    line-height: 70px !important;
 }
 
-#navtext {
-    color: #e4e4e4;
-    font-family: 'Aldrich';
-    font-size: 20px;
-    margin: 10px 0 10px 0;
+.features .subtitle {
+    font-size: 20px !important;
+    color: #a2a8bd;
 }
 
-#navtext-div {
-    justify-content: space-evenly;
-    display: flex;
+.features .card-body {
+    text-align: left !important;
 }
 
-
-
-/*                                 LANDING                                     */
-
-
-
-#logo-main-1 {
-    border-radius: 1000px;
-    margin: 30px auto 0 auto;
-    display: block;
-    border: solid #7289da 5px;
-    max-width: -webkit-fill-available;
-    max-height: 400px;
+.features .card-title {
+    margin: 0 0 -3px !important;
+}
+.cards {
+    margin-top: 30px !important;
 }
 
-#botname-main-1 {
-    color: #e4e4e4;
-    font-family: "Black Ops One";
-    text-align: center;
-    font-size: 40px;
+.card {
+    border-radius: 5px !important;
+    box-shadow: none !important;
 }
 
-#main-buttons {
-    display: flex;
-    justify-content: space-evenly;
+.card-title {
+    font-size: 28px !important;
+    font-weight: 600 !important;
+    color: #0e1726 !important;
 }
 
-#main-buttons-2 {
-    display: flex;
-    justify-content: space-evenly;
+.statistics {
+    text-align: center !important;
+    padding-top: 300px !important;
 }
 
-#main-button-2 {
-    width: 200px;
-    height: 50px;
-    border-radius: 40px;
-    background-color: #7289da;
-    border: none;
-    transition: 0.5s;
-    cursor: pointer;
-    outline: none;
-    font-weight: bold;
-    font-family: "Aldrich";
+.statistics .card-body{
+    padding: 0 !important;
+    height: 280 !important;
+    width: 332 !important;
+    max-height: 280 !important;
+    max-width: 332 !important;
 }
 
-#main-button-2:hover {
-    transition: 0.5s;
-    filter: drop-shadow(2px 4px 10px #181a1d);
-    outline: none;
+.statistics .title {
+    font-size: 40px !important;
+    color: #ffffff !important;
+    line-height: 70px !important;
 }
 
-#main-button-2-1 {
-    width: 200px;
-    height: 50px;
-    border-radius: 40px;
-    background-color: #7289da;
-    border: none;
-    color: white;
-    transition: 0.5s;
-    cursor: pointer;
-    outline: none;
-    font-weight: bold;
-    font-family: "Aldrich";
+.statistics .subtitle {
+    font-size: 20px !important;
+    color: #a2a8bd;
 }
 
-#main-button-2-1:hover {
-    transition: 0.5s;
-    filter: drop-shadow(2px 4px 10px #181a1d);
-    outline: none;
-}
-
-#main-button-1 {
-    width: 200px;
-    height: 50px;
-    border-radius: 40px;
-    background-color: #23272a;
-    color: #ffffff;
-    border: none;
-    transition: 0.5s;
-    outline: none;
-    font-weight: bold;
-    font-family: "Aldrich";
-}
-
-#main-button-1:hover {
-    transition: 0.5s;
-    filter: drop-shadow(2px 7px 3px #181a1d);
-    cursor: pointer;
-    outline: none;
-}
-
-#main-button-4 {
-    width: 200px;
-    height: 50px;
-    border-radius: 40px;
-    background-color: #f96854;
-    color: #052d49;
-    border: none;
-    transition: 0.5s;
-    outline: none;
-    font-weight: bold;
-    font-family: "Aldrich";
-}
-
-#main-button-4:hover {
-    transition: 0.5s;
-    filter: drop-shadow(2px 7px 3px #181a1d);
-    cursor: pointer;
-    outline: none;
-}
-
-#main-button-3 {
-    width: 200px;
-    height: 50px;
-    border-radius: 40px;
-    background-color: #ffee00;
-    color: black;
-    border: none;
-    transition: 0.5s;
-    outline: none;
-    font-weight: bold;
-    font-family: "Aldrich";
-}
-
-#main-button-3:hover {
-    transition: 0.5s;
-    filter: drop-shadow(2px 7px 3px #181a1d);
-    cursor: pointer;
-    outline: none;
-}
-
-/* BY CREPER92YT 
-www.creper92.tk*/
-
-#main-info {
-    font-family: "Bungee";
-    color: #ffffff;
-}
-
-#main-info-1 {
-    text-align: left;
-    max-width: 50%;
-}
-
-#main-info-2 {
-    float: right;
-    max-width: 50%
+.card.statistic {
+    background: transparent !important;
+    box-shadow: none !important;
+    color: #f7f7f7 !important;
 }
 
 
-/*                   FOOTER                */
-
-
-footer {
-    border-top: solid #23272a 5px;
-    margin-top: 20px;
+.page_end {
+    background-image: url("../assets/wavy-light-by-nouridio.svg") !important;
+    background-position: bottom !important;
+    background-size: 200% !important;
+    background-repeat: no-repeat !important;
+}
+.start {
+    padding: 60px 50px !important
 }
 
-#footer-copyright {
-    text-align: center;
-    color: #99aab5;
-    font-family: "Black Ops one";
+.start .card {
+    background: transparent !important;
+    color: #f6f9ff !important;
 }
 
-#footer-credits {
-    text-align: right;
-    color: white
+.features .card {
+    background: #1D1E28;
+    border-radius: 22px !important;
+    border: 4px solid #0f1b30;
+}
+.features .card-text {
+color: rgba(255, 255, 255, 0.46) !important
 }
 
-a {
-    color: unset;
-    outline: none;
-    text-decoration: none;
+.features .card-body {
+    padding: 40px 40px 40px 30px !important;
 }
 
-
-
-
-
-
-
-
-
-
-/*                   DEVELOPERS PAGE                           */
-
-#developers-grid {
-    display: flex;
-    justify-content: space-around;
+.navbar-toggler-icon {
+    color: #fff !important
+}
+.footer {
+    text-align: center !important;
+    padding: 5px 6px !important;
+    color: #ecf2ff;
+    padding: 30px 30px !important
 }
 
-#developers-grid2 {
-    display: flex;
-    justify-content: space-around;
+.footer .nouridio {
+    font-family: 'Montserrat' !important;
+    font-style: normal !important;
+    font-weight: 600 !important;
+    font-size: 16px !important;
+    line-height: 5px !important;
+    letter-spacing: 0.15em !important;
+    font-variant: small-caps !important;
 }
 
-#developers-grid3 {
-    display: flex;
-    justify-content: space-around;
+.footer .nouridio a {
+    color: #AD91FF !important;
+    text-decoration: none !important;
 }
 
-#developers-img1 {
-    border-radius: 150px;
-    border: none;
-    margin: 0 auto 0 auto;
+.footer .bot-footer {
+    text-align: center !important;
+    color: #a2a8bd !important
 }
 
-#developers-img2 {
-    border-radius: 150px;
-    border: none;
-    margin: 0 auto 0 auto;
+::-webkit-scrollbar {
+  width: 20px;
 }
 
-#developers-img3 {
-    border-radius: 150px;
-    border: none;
-    margin: 0 auto 0 auto;
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey;
+  border-radius: 10px;
 }
 
-#developers-img4 {
-    border-radius: 150px;
-    border: none;
-    margin: 0 auto 0 auto;
-}
-
-#developers-grade {
-    font-size: 50px;
-    text-transform: uppercase;
-    font-family: "Aldrich";
-    font-weight: bold;
-    text-align: center;
-    color: #ffffff;
-}
-
-#developers-grade2 {
-    font-size: 50px;
-    text-transform: uppercase;
-    font-family: "Aldrich";
-    font-weight: bold;
-    text-align: center;
-    color: #ffffff;
-}
-
-#developers-grade3 {
-    font-size: 50px;
-    text-transform: uppercase;
-    font-family: "Aldrich";
-    font-weight: bold;
-    text-align: center;
-    color: #ffffff;
-}
-
-#developers-name {
-    color: #ffffff;
-    font-family: "Aldrich";
-}
-
-#developers-name2 {
-    color: #ffffff;
-    font-family: "Aldrich";
-}
-
-#developers-name3 {
-    color: #ffffff;
-    font-family: "Aldrich";
-}
-
-#developers-name4 {
-    color: #ffffff;
-    font-family: "Aldrich";
-}
-
-
-/*                 COMMANDS                              */
-
-#commands-grid {
-color: sas;
-}
-
-#commands-minigrid {
-    background-color: #23272a;
-    border-radius: 10px;
-    padding: 10px 30px 10px 30px;
-    margin-top: 10px;
-}
-
-#commands-name {
-    color: white;
-    font-family: "Aldrich";
-    font-weight: 500
-}
-
-#commands-desc {
-    color: #99aab5;
-    font-family: "Aldrich";
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #191e3a;
+  border-radius: 10px;
 }

@@ -117,8 +117,9 @@ module.exports = async client => {
     const botInfo = {
       username: client.user.username,
       status: client.user.presence.status,
-      users: client.users.size,
-      guilds: client.guilds.size
+      users: client.users.cache.size,
+      
+      guilds: client.guilds.cache.size
     };
 
     const guilds = [];
@@ -139,10 +140,13 @@ module.exports = async client => {
     const baseData = {
       bot: client,
       botInfo: botInfo,
+      success: false,
+      profile: req.isAuthenticated() ? req.user : null,
       path: req.path,
       user: req.isAuthenticated() ? req.user : null,
       guilds: req.isAuthenticated() ? guilds : null
     };
+
 
     // We render template using the absolute path of the template and the merged default data with the additional data provided.
     res.render(
@@ -207,6 +211,10 @@ module.exports = async client => {
   app.get("/support", (req, res) => {
     res.redirect("https://discord.gg/invite/95QvjUn9pd");
   });
+  
+   app.get("/botping", (req, res) => {
+    res.send("Bot is online!")
+  });
 
   // Dashboard endpoint.
   app.get("/guilds", checkAuth, (req, res) => {
@@ -218,7 +226,7 @@ module.exports = async client => {
   });
 
   app.get("/commands", checkAuth, (req, res) => {
-    renderTemplate(res, req, "commands.ejs", { perms: Discord.Permissions });
+    renderTemplate(res, req, "commands.ejs", { perms: Discord.Permissions, commands: client.commands, prefix: "!" });
   });
 
   app.get("/guild/:guildID", checkAuth, async (req, res) => {
@@ -392,6 +400,7 @@ module.exports = async client => {
     res.status(404);
     let data = {
       code: 404,
+      url: "https://dashboard.dismic.org/",
       shortDescription: "Not found",
       description: "The page you're looking for can't be found."
     };

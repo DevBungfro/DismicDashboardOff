@@ -7,15 +7,15 @@ const Discord = require("discord.js");
 const mongoose = require("mongoose");
 const GuildSettings = require("./models/settings");
 const Dashboard = require("./dashboard/dashboard");
-const fetch = require("node-fetch");
 const cooldown = {};
+const { MessageEmbed, WebhookClient, Intents } = require("discord.js");
 
-// We instiate the client and connect to database.
-const client = new Discord.Client({
-  ws: {
-    intents: ["GUILDS", "GUILD_MEMBERS", "GUILD_MESSAGES"]
-  }
+const webhookClient = new WebhookClient({
+  id: process.env.webhookId,
+  token: process.env.webhookToken
 });
+// We instiate the client and connect to database.
+const client = new Discord.Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
 
 const fs = require("fs");
 
@@ -40,9 +40,7 @@ client.on("ready", async () => {
 
   require("./keep-alive.js");
 
-  for (const [id, guild] of client.guilds.cache) {
-    await guild.members.fetch();
-  }
+
 
   console.log("Fetched members.");
 
@@ -53,15 +51,26 @@ client.on("ready", async () => {
   client.user.setActivity("Dismic", { type: "WATCHING" });
 });
 
+client.on("guildCreate", async guild => {
+      const embed = new MessageEmbed().setTitle("Error").setColor("#00FF00");
+
+    webhookClient.send({
+      content: "(" + client.guilds.cache.size + ") I was just added to a guild - " + guild.name,
+      embeds: [embed]
+    });
+})
+
 client.on("guildMemberAdd", async member => {
   var storedSettings = await GuildSettings.findOne({ gid: member.guild.id });
   if (!storedSettings) {
     // If there are no settings stored for this guild, we create them and try to retrive them again.
     const newSettings = new GuildSettings({
-      gid: member.guild.id
+      gid: member.guild.id,
+      premium: true
     });
     await newSettings.save().catch(() => {});
     storedSettings = await GuildSettings.findOne({ gid: member.guild.id });
+    
   }
 
   let channel = member.guild.channels.cache.get(storedSettings.joinchannel);
@@ -70,21 +79,32 @@ client.on("guildMemberAdd", async member => {
     let msg = storedSettings.joinmsg;
 
     channel.send(
-      msg.replace(/%user%|%guild%/g, function(w) {
+      msg.replace(/%user%|%guild%|%members%|%memberswithbots%/g, function(w) {
         switch (w) {
           case "%guild%":
             return member.guild.name;
 
           case "%user%":
             return member.user.username;
+          case "%members%":
+            return member.guild.members.cache.filter(member => !member.user.bot).size;  
+          case "%memberswithbots%":
+            return member.guild.members.cache.size;  
         }
+        
       })
     );
+    
+    
+  }
+  
+  if (member.guild.id == "870024355961258014") {
+    member.roles.add("870024355973832770")
   }
 });
 
 // We listen for message events.
-client.on("message", async message => {
+client.on("messageCreate", async message => {
   // Declaring a reply function for easier replies - we grab all arguments provided into the function and we pass them to message.channel.send function.
 
   // Doing some basic command logic.
