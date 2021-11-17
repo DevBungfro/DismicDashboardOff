@@ -122,20 +122,7 @@ module.exports = async client => {
       guilds: client.guilds.cache.size
     };
 
-    const guilds = [];
-    if (req.user && data.perms) {
-      req.user.guilds.forEach(guild => {
-        const permsOnGuild = new data.perms(guild.permissions);
-        if (
-          !permsOnGuild.has("MANAGE_GUILD") ||
-          !client.guilds.cache.get(guild.id)
-        )
-          return;
-
-        guilds.push(guild);
-      });
-    }
-
+   
     // Default base data which passed to the ejs template by default.
     const baseData = {
       bot: client,
@@ -144,7 +131,6 @@ module.exports = async client => {
       profile: req.isAuthenticated() ? req.user : null,
       path: req.path,
       user: req.isAuthenticated() ? req.user : null,
-      guilds: req.isAuthenticated() ? guilds : null
     };
 
 
@@ -237,17 +223,16 @@ module.exports = async client => {
     // We validate the request, check if guild exists, member is in guild and if member has minimum permissions, if not, we redirect it back.
     const guild = client.guilds.cache.get(req.params.guildID);
     if (!guild) return res.redirect("/guilds");
-    const member = guild.members.cache.get(req.user.id);
+    let member = guild.members.cache.get(req.user.id);
     if (!member) {
       try {
-        await guild.members.fetch();
         member = guild.members.cache.get(req.user.id);
       } catch (err) {
         console.error(`Couldn't fetch the members of ${guild.id}: ${err}`);
       }
     }
     if (!member) return res.redirect("/guilds");
-    if (!member.permissions.has("MANAGE_GUILD")) return res.redirect("/guilds");
+    if (!member.permissions.has(Discord.Permissions.FLAGS.MANAGE_GUILD)) return res.redirect("/guilds");
 
     // We retrive the settings stored for this guild.
     var storedSettings = await GuildSettings.findOne({ gid: guild.id });
@@ -279,7 +264,7 @@ module.exports = async client => {
     if (!guild) return res.redirect("/guilds");
     const member = guild.members.cache.get(req.user.id);
     if (!member) return res.redirect("/guilds");
-    if (!member.permissions.has("MANAGE_GUILD")) return res.redirect("/guilds");
+    if (!member.permissions.has(Discord.Permissions.FLAGS.MANAGE_GUILD)) return res.redirect("/guilds");
     // We retrive the settings stored for this guild.
     var storedSettings = await GuildSettings.findOne({ gid: guild.id });
     if (!storedSettings) {
@@ -351,7 +336,7 @@ module.exports = async client => {
     if (!guild) return res.redirect("/guilds");
     const member = guild.members.cache.get(req.user.id);
     if (!member) return res.redirect("/guilds");
-    if (!member.permissions.has("MANAGE_GUILD")) return res.redirect("/guilds");
+    if (!member.permissions.has(Discord.Permissions.FLAGS.MANAGE_GUILD)) return res.redirect("/guilds");
     // We retrive the settings stored for this guild.
     var storedSettings = await GuildSettings.findOne({ gid: guild.id });
     if (!storedSettings) {

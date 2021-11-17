@@ -15,38 +15,45 @@
     <title>Dismic</title>
 </head>
 <body>
+  
+  <style type="text/css">
+
+body {
+	font-family: Arial;
+	font-size: 36px;
+}
+    
+
+
+#container {
+	margin: 50px 0 0 -2;
+	text-align: center;
+}
+
+#text {
+	display: inline-block;
+	color: #2980b9;
+	border-right: 3px solid #2980b9;
+}
+
+</style>
+  
+  <script src="https://cdn.logwork.com/widget/countdown.js"></script>
+<a href="https://logwork.com/countdown-r6gn" class="countdown-timer" data-timezone="America/New_York" data-date="2021-11-30 12:00">Dismic Release</a>
 
 <div class="heading">
-    <h1 class="display-5 title">It's time to use Bot in your server.</h1>
-    <p class="subtitle">Bot is a multi-purpose bot ready to skill up and boost up your Discord server<br />Also features auto-moderation, administration, music and much more!</p>
-    <a class="btn btn-primary btn-lg" href="guilds" target="_blank" role="button">Get started</a>
+    <h1 class="display-5 title">Use Dismic. Why?</h1>
+<div id="container">
+	<div id="text"></div>
+</div>    
+      <p class="subtitle">Dismic is a multi-purpose bot ready to moderate your discord server, and have fun with users!<br />It's easy to use and has great staff and support!</p>
+
     <a class="btn btn-secondary btn-lg" href="<%= `https://discordapp.com/oauth2/authorize?client_id=${bot.user.id}&scope=bot&response_type=code&redirect_uri=${encodeURIComponent(`${process.env.domain}/callback`)}`  %>" target="_blank" role="button">Add to server</a>
     <br /><br /><br /><br /><br /><br />
 </div>
-<div class="features">
-    <div class="title">Features of Bot</div>
-    <div class="subtitle">We provide you the best features in Bot!</div>
-    <div class="cards">
-        <div class="card" style="width: 18rem;">
-        <div class="card-body">
-            <h5 class="card-title">Future #1</h5>
-            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent ex ante, mattis vel dapibus vel, tempor facilisis justo. Vivamus dignissim ut nisi eu consequat.</p>
-        </div>
-    </div>
-        <div class="card" style="width: 18rem;">
-            <div class="card-body">
-                <h5 class="card-title">Future #2</h5>
-                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent ex ante, mattis vel dapibus vel, tempor facilisis justo. Vivamus dignissim ut nisi eu consequat.</p>
-            </div>
-        </div>
-        <div class="card" style="width: 18rem;">
-            <div class="card-body">
-                <h5 class="card-title">Future #3</h5>
-                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent ex ante, mattis vel dapibus vel, tempor facilisis justo. Vivamus dignissim ut nisi eu consequat.</p>
-            </div>
-        </div>
-    </div>
-</div>
+
+
+  
 <div class="statistics">
     <div class="cards">
         <div class="card statistic" style="width: 18rem;">
@@ -73,8 +80,8 @@
     <div class="start">
         <div class="card">
             <div class="card-body gs-card">
-                <div class="title">Ready to try Bot?</div>
-                <div class="subtitle">Invite Bot and start giving your server cool perks!</div>
+                <div class="title">Ready to try Dismic?</div>
+                <div class="subtitle">Invite Bot and start moderating your server!</div>
                 <br />
                 <a class="btn btn-primary btn-lg" href="#start" role="button">Get started</a>
             </div><br />
@@ -82,16 +89,78 @@
     </div>
     <div class="footer">
         <div class="bot-footer">
-            <img src="assets/BotLogoWord.svg" width="150"><br />
-            Copyright © Dismic - 2020
+            <img src="https://cdn.glitch.me/ac5fddea-d4fa-4706-ac12-d91341fbe1c4%2FDismicLogo.png?v=1637050942964" width="50"><br />
+            Copyright © Dismic - 2021
+          
         </div><br/>
-    </di
+              <div class="bungfro">coded with ❤️ by <a href="/">Bungfro</a></div>
+
+  </div>
 </div>
 
 </body>
 </html>
 
 <script>
+  
+  
+// List of sentences
+var _CONTENT = [ "Easy to understand", "Nice UI", "Great staff & support", "Fast & Customizable" ];
+
+// Current sentence being processed
+var _PART = 0;
+
+// Character number of the current sentence being processed 
+var _PART_INDEX = 0;
+
+// Holds the handle returned from setInterval
+var _INTERVAL_VAL;
+
+// Element that holds the text
+var _ELEMENT = document.querySelector("#text");
+
+// Implements typing effect
+function Type() { 
+	var text =  _CONTENT[_PART].substring(0, _PART_INDEX + 1);
+	_ELEMENT.innerHTML = text;
+	_PART_INDEX++;
+
+	// If full sentence has been displayed then start to delete the sentence after some time
+	if(text === _CONTENT[_PART]) {
+		clearInterval(_INTERVAL_VAL);
+		setTimeout(function() {
+			_INTERVAL_VAL = setInterval(Delete, 50);
+		}, 1000);
+	}
+}
+
+// Implements deleting effect
+function Delete() {
+	var text =  _CONTENT[_PART].substring(0, _PART_INDEX - 1);
+	_ELEMENT.innerHTML = text;
+	_PART_INDEX--;
+
+	// If sentence has been deleted then start to display the next sentence
+	if(text === '') {
+		clearInterval(_INTERVAL_VAL);
+
+		// If last sentence then display the first one, else move to the next
+		if(_PART == (_CONTENT.length - 1))
+			_PART = 0;
+		else
+			_PART++;
+		_PART_INDEX = 0;
+
+		// Start to display the next sentence after some time
+		setTimeout(function() {
+			_INTERVAL_VAL = setInterval(Type, 100);
+		}, 200);
+	}
+}
+
+// Start the typing effect on load
+_INTERVAL_VAL = setInterval(Type, 100);
+  
 function animateValue(id, start, end, duration) {
     if (start === end) return;
     var range = end - start;

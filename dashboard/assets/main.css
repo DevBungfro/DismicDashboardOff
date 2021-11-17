@@ -65,12 +65,14 @@ body {
 .title {
     line-height: 90px !important;
     margin-bottom: -2px !important;
-    font-size: 36px !important
+    font-size: 36px !important;
+    text-align: center;
 }
 
 .subtitle {
     color: rgba(255, 255, 255, 0.685) !important;
     font-size: 16px !important;
+  	text-align: center;
     font-family: 'Lato', sans-serif;
 }
 
@@ -114,7 +116,7 @@ body {
 .card-title {
     font-size: 28px !important;
     font-weight: 600 !important;
-    color: #0e1726 !important;
+    color: #2a5db3 !important;
 }
 
 .statistics {
@@ -186,7 +188,7 @@ color: rgba(255, 255, 255, 0.46) !important
     padding: 30px 30px !important
 }
 
-.footer .nouridio {
+.footer .bungfro {
     font-family: 'Montserrat' !important;
     font-style: normal !important;
     font-weight: 600 !important;
@@ -196,7 +198,7 @@ color: rgba(255, 255, 255, 0.46) !important
     font-variant: small-caps !important;
 }
 
-.footer .nouridio a {
+.footer .bungfro a {
     color: #AD91FF !important;
     text-decoration: none !important;
 }

@@ -2,8 +2,8 @@
 
 <div style="display: flex; flex-wrap: wrap; justify-content: center;">
   <% user.guilds.forEach(guild => {
-    const permsOnGuild = new perms(guild.permissions);
-    if(!permsOnGuild.has("MANAGE_GUILD")) return;
+      const permsOnGuild = new perms(guild.permissions_new);
+      if(!permsOnGuild.has(perms.FLAGS.MANAGE_GUILD)) return;
   %>
     <div class="card" style="max-width: 200px; margin: 2rem; min-width: 10em; background-color: #1c283c;">
     <%- guild.icon ? `<img src="https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}" class="card-img-top" style="max-width: 18rem;">` : `<img src="https://media.discordapp.net/attachments/877791990169870346/877792002698260500/dBymBmGq_400x400.jpg" class="card-img-top" style="max-width: 18rem;">` %>

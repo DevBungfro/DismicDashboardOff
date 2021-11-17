@@ -13,4 +13,4 @@ const guildSettingSchema = new Schema({
 });
 
 // We export it as a mongoose model.
-module.exports = model("guild_settings", guildSettingSchema);
+module.exports = model("guilds", guildSettingSchema);

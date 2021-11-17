@@ -15,12 +15,17 @@ const webhookClient = new WebhookClient({
   token: process.env.webhookToken
 });
 // We instiate the client and connect to database.
-const client = new Discord.Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
+const client = new Discord.Client({
+
+  intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MEMBERS]
+});
 
 const fs = require("fs");
 
 //HANDLER VARIABLES
 client.commands = new Discord.Collection();
+client.slashCommands = new Discord.Collection();
+
 client.aliases = new Discord.Collection();
 client.cooldowns = new Discord.Collection();
 
@@ -40,7 +45,9 @@ client.on("ready", async () => {
 
   require("./keep-alive.js");
 
-
+  for (const [id, guild] of client.guilds.cache) {
+    await guild.members.fetch();
+  }
 
   console.log("Fetched members.");
 
@@ -52,13 +59,17 @@ client.on("ready", async () => {
 });
 
 client.on("guildCreate", async guild => {
-      const embed = new MessageEmbed().setTitle("Error").setColor("#00FF00");
+  const embed = new MessageEmbed().setTitle("Error").setColor("#00FF00");
 
-    webhookClient.send({
-      content: "(" + client.guilds.cache.size + ") I was just added to a guild - " + guild.name,
-      embeds: [embed]
-    });
-})
+  webhookClient.send({
+    content:
+      "(" +
+      client.guilds.cache.size +
+      ") I was just added to a guild - " +
+      guild.name,
+    embeds: [embed]
+  });
+});
 
 client.on("guildMemberAdd", async member => {
   var storedSettings = await GuildSettings.findOne({ gid: member.guild.id });
@@ -70,7 +81,6 @@ client.on("guildMemberAdd", async member => {
     });
     await newSettings.save().catch(() => {});
     storedSettings = await GuildSettings.findOne({ gid: member.guild.id });
-    
   }
 
   let channel = member.guild.channels.cache.get(storedSettings.joinchannel);
@@ -87,19 +97,18 @@ client.on("guildMemberAdd", async member => {
           case "%user%":
             return member.user.username;
           case "%members%":
-            return member.guild.members.cache.filter(member => !member.user.bot).size;  
+            return member.guild.members.cache.filter(
+              member => !member.user.bot
+            ).size;
           case "%memberswithbots%":
-            return member.guild.members.cache.size;  
+            return member.guild.members.cache.size;
         }
-        
       })
     );
-    
-    
   }
-  
+
   if (member.guild.id == "870024355961258014") {
-    member.roles.add("870024355973832770")
+    member.roles.add("870024355973832770");
   }
 });
 
@@ -144,8 +153,9 @@ client.on("messageCreate", async message => {
     let time = cooldown[message.author.id][command.name] || 0;
     if (time && time > Date.now()) {
       let wait = Math.ceil((time - Date.now()) / 1000);
-      let cool = new Discord.MessageEmbed()
-      .setDescription(`❌ Please wait ${wait} more Second(s) before reusing the ${command.name} command.`);
+      let cool = new Discord.MessageEmbed().setDescription(
+        `❌ Please wait ${wait} more Second(s) before reusing the ${command.name} command.`
+      );
       return message.channel.send(cool);
     }
     cooldown[message.author.id][command.name] = Date.now() + command.cooldown;
